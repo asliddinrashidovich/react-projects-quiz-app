@@ -1,8 +1,7 @@
-import UseFetch from "../hooks/UseFetch"
+
+import MenuLinks from "../components/MenuLinks"
 
 function HomePage() {
-    let API = 'https://67a209b8409de5ed52540ec2.mockapi.io/api/v1/quizzapp'
-    const {data: items, isPending, error} = UseFetch(API)
   return (
     <div className="home-container container">
         <div className="home-content">
@@ -12,9 +11,8 @@ function HomePage() {
             </h1>
             <p>Pick a subject to get started</p>
         </div>
-        <div className="menu-list">
-            {isPending && <h4>Loading...</h4>}
-            
+        <div>
+            <MenuLinks/>
         </div>
     </div>
   )
