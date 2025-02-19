@@ -9,14 +9,14 @@ function App() {
     {
       path: "",
       element: <MainLayout/>,
+      errorElement: <ErrorPage/>,
       children: [
         {
           index: true,
           element: <HomePage/>,
-          errorElement: <ErrorPage/>
         },
         {
-          path: 'quiz',
+          path: '/quiz/:title',
           element: <QuizPage/>
         }
       ]
