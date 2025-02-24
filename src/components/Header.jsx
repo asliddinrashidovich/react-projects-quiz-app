@@ -1,34 +1,65 @@
-import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
+const toggleMode = () => {
+  return localStorage.getItem("darkMode") || "light";
+};
 
 function Header() {
-    const title = useParams();
+  const { title } = useParams();
+  const [theme, setTheme] = useState(() => toggleMode());
+
+  const handleThemeToggle = (e) => {
+    e.preventDefault();
+    const newTheme = theme === "dark-mode" ? "light" : "dark-mode";
+    setTheme(newTheme);
+  };
+
+  useEffect(() => {
+    document.body.className = "";
+    document.body.classList.add(theme);
+    localStorage.setItem("darkMode", theme);
+  }, [theme]);
+
   return (
-    <div className="header header-container container">
-        {title.title ? (
+    <header className="header">
+      <div className="header-container container">
+        {title ? (
           <Link className="header-logo" to="/">
             <figure>
               <img
-                src={`../assets/icon-${title.title.toLowerCase()}.svg`}
+                src={`../assets/icon-${title.toLowerCase()}.svg`}
                 alt="icon"
               />
             </figure>
-            <span>{title.title}</span>
+            <span>{title}</span>
           </Link>
         ) : (
           <span></span>
         )}
-        <div >
-            <label htmlFor="dark" className="dark-btn">
-                <input type="checkbox" id="dark" />
-                <span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </label>
+
+        {/* Header TOGGLE */}
+        <div>
+          <label
+            htmlFor="dark"
+            className="dark-btn"
+            onClick={handleThemeToggle}
+          >
+            <input
+              type="checkbox"
+              id="dark"
+              checked={theme === "dark-mode"}
+              readOnly
+            />
+            <span>
+              <span></span>
+              <span></span>
+            </span>
+          </label>
         </div>
-    </div>
-  )
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Header;
